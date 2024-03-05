@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { InputTextModule } from 'primeng/inputtext';
 import { AppComponent } from './app.component';
- import { FormsModule } from '@angular/forms';
+ import {FormsModule } from '@angular/forms';
 import { MenubarModule } from 'primeng/menubar';
 //----
 // import { NgModule }      from '@angular/core';
@@ -26,6 +26,10 @@ import {ToastModule} from 'primeng/toast';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import {StyleClassModule} from 'primeng/styleclass';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { PanelModule } from 'primeng/panel';
+
+
 
 @NgModule({
   declarations: [
@@ -48,7 +52,9 @@ import {StyleClassModule} from 'primeng/styleclass';
     ToastModule,
     ProgressBarModule,
     DropdownModule,
-    StyleClassModule
+    StyleClassModule,
+    ConfirmDialogModule,
+    PanelModule
   ],
   providers: [CustomerService],
   bootstrap: [AppComponent]

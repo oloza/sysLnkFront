@@ -1,0 +1,33 @@
+{
+    "data": [
+    {
+      "_id":"dfa23d1",
+      "nombre": "intratel",
+      "url": "http://intratel/Paginas/inicio_base.aspx",
+      "ambiente":"PROD",
+      "fecha_alta": "2015-09-13",
+      "fecha_modificacion":"2015-09-13",
+      "fecha_baja": "2015-09-13"
+    },
+    {
+        "_id":"asdfdf2",
+        "nombre": "Tangram",
+        "url": "http://eapprobalint.entelsn.local/tangram/",
+        "ambiente":"PROD",
+        "fecha_alta": "2015-09-13",
+        "fecha_modificacion":"2015-09-13",
+        "fecha_baja": "2015-09-13"
+      },
+      {
+        "_id":"asdfadf3",
+        "nombre": "Tangram",
+        "url": "http://eapprobalint.entelsn.local/sicoverde/",
+        "ambiente":"PROD",
+        "fecha_alta": "2015-09-13",
+        "fecha_modificacion":"2015-09-13",
+        "fecha_baja": "2015-09-13"
+      }
+    ]
+}
+
+    

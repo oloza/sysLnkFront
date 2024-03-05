@@ -7,42 +7,27 @@
   </ng-template> -->
 </p-menubar>
 
- <div class="card flex justify-content-center">
-    <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-      <ng-template pTemplate="header">
-          <div class="inline-flex align-items-center justify-content-center gap-2">
-              <span class="font-bold white-space-nowrap">Nuevo URL</span>
-          </div>
-        </ng-template>
-              
-           <!-- <div class="card flex justify-content-center"> -->
-        
-            <div class="field">
-              <label for="firstname1">Nombre Sistema</label>
-              <input id="firstname1" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="field">
-              <label for="lastname1">Dirección</label>
-              <input id="lastname1" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-        
-          <!-- </div> -->
+
+<div class="card flex justify-content-center">
+    <!-- <input type="text" pInputText [(ngModel)]="value" /> -->
+    <p-panel header="link" [style]="{'width':'80rem'}">
+
+<div class="card flex justify-content-center gap-2">
+    <p-toast></p-toast>
+    <p-confirmDialog></p-confirmDialog>
+    <!-- <p-button (click)="confirm1($event)" icon="pi pi-check" label="Confirm"></p-button> -->
+    <!-- <p-button (click)="confirm2($event)" icon="pi pi-times" label="Delete" styleClass="p-button-danger"></p-button> -->
+</div>
 
 
-      <ng-template pTemplate="footer">
-          <p-button icon="pi pi-check" (click)="visible = false" label="Ok" pAutoFocus [autofocus]="true"></p-button>
-      </ng-template>
-  </p-dialog>
-  </div>
-  
+
   <!-- [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']" -->
-  
-
-<p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+  <!--p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" -->
+  <p-table #dt [value]="links" [(selection)]="selectedLinks" dataKey="id"  [rowHover]="true"
             [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [filterDelay]="0" 
-            [globalFilterFields]="['name','nameX2','statusX']" 
+            [globalFilterFields]="['nombre','urlx']" 
             >
             <ng-template pTemplate="caption">
                 <div class="table-header">
@@ -56,64 +41,124 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 3rem"></th>
-                    <th pSortableColumn="name">NombreSys <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="country.name">Direccion <p-sortIcon field="country.name"></p-sortIcon></th>
-                    <!-- <th pSortableColumn="representative.name">Representative <p-sortIcon field="representative.name"></p-sortIcon></th> -->
-                    <!-- <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th> -->
-                    <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-                    <!-- <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th> -->
+                    <th pSortableColumn="nombre">Sistema <p-sortIcon field="nombre"></p-sortIcon></th>
+                    <th pSortableColumn="url">Direccion <p-sortIcon field="url"></p-sortIcon></th>
+                    <th pSortableColumn="ambiente">Ambiente <p-sortIcon field="ambiente"></p-sortIcon></th>
                     <th style="width: 8rem"></th>
                     <th style="width: 8rem"></th>
                 </tr>
          
             </ng-template>
-            <ng-template pTemplate="body" let-customerx>
+            <ng-template pTemplate="body" let-link>
                 <tr class="p-selectable-row">
                     <td>
                         <!-- <p-tableCheckbox [value]="customer"></p-tableCheckbox> -->
                     </td>
-
                     <td>
-                        <span class="p-column-title">Name</span>
-                        {{customerx.name}}
+                        <span class="p-column-title">Nombre</span>
+                        {{link.nombre}}
                     </td>
                    
                     <td>
-                        <span class="p-column-title">names2</span>
-                        <span class="image-text">{{customerx.country.name}}</span>
+                        <span class="p-column-title">Ambiente</span>
+                        <span class="image-text">{{link.ambiente.descripcion}}</span>
+                    </td>
+
+                    <td>
+                        <span class="p-column-title">Direccion</span>
+                        <span class="image-text">{{link.url}}</span>
                     </td>
                     
-                    <!-- <td>
-                        <span class="p-column-title">Representative</span>
-                        <span class="image-text">{{customer.representative.name}}</span>
-                    </td>
-                    <td>
-                        <span class="p-column-title">Date</span>
-                        {{customer.date}}
-                    </td> -->
-
-                    <td>
-                        <span class="p-column-title">Status</span>
-                        <span [class]="'customer-badge status-' + customerx.status">{{customerx.status}}</span>
-                    </td>
-
-                     <!-- <td>
-                        <span class="p-column-title">Activity</span>
-                        <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-                    </td>  -->
-
+                  
                     <td style="text-align: center">
-                        <button pButton type="button" class="p-button-secondary" icon="pi pi-cog"></button>
+                        <button pButton type="button" class="p-button-primary" icon="pi pi-cog" (click)="showUpdateLink(link)">Actualizar</button>
                     </td>
+                    
                     <td style="text-align: center">
-                        <button pButton type="button" class="p-button-secondary" icon="pi pi-search"></button>
-                    </td>
+
+                        <!-- <div class="card flex justify-content-center gap-2"> -->
+                            <!-- <p-toast></p-toast> -->
+                            <!-- <p-confirmDialog></p-confirmDialog> -->
+                            <!-- <p-button (click)="confirm1($event)" icon="pi pi-check" label="Confirm"></p-button> -->
+                            <!-- <p-button (click)="confirm2($event)" icon="pi pi-times" label="Delete" styleClass="p-button-danger"></p-button> -->
+                            <!-- <button pButton type="button" class="p-button-primary" icon="pi pi-search" (click) ="deleteLink($event,link)"></button> -->
+                                <button pButton type="button" class="p-button-primary" icon="pi pi-cog" (click) ="deleteLink($event,link)">Borrar</button>
+                                <!-- <p-button  icon="pi pi-times" styleClass="p-button-danger" (click) ="deleteLink($event,link)">Borrar</p-button> -->
+                        <!-- </div> -->
+                   </td>
+                   
+
+
+                 
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="8">No customers found.</td>
+                    <td colspan="8">No existe resultados.</td>
                 </tr>
             </ng-template>
         </p-table>
        
+
+
+<!-- new -->
+        <div class="card flex justify-content-center">
+            <p-dialog header="Header" [(visible)] = "visible" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+              <ng-template pTemplate="header">
+                  <div class="inline-flex align-items-center justify-content-center gap-2">
+                      <span class="font-bold white-space-nowrap">Nuevo URL</span>
+                  </div>
+                </ng-template>
+                   <div class="field">
+                      <label for="nombreUrl">Nombre Sistema</label>
+                      <input id="nombreUrl" [(ngModel)]="nombreUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                  </div>
+                  <div class="field">
+                      <label for="direccionUrl">Dirección</label>
+                      <input id="direccionUrl"  [(ngModel)]="direccionUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                  </div>
+                  <div class="field">
+                    <label for="ambiente">Ambiente</label>
+                    <p-dropdown appendTo="body" [options]="ambiente" [(ngModel)] = "selectedAmbiente" optionLabel="descripcion" [showClear]="true" placeholder="Seleccionar ambiente"></p-dropdown>
+                </div>
+        
+              <ng-template pTemplate="footer">
+                  <p-button icon="pi pi-check" (click)="createLink()" label="Ok" pAutoFocus [autofocus]="true"></p-button>
+              </ng-template>
+          </p-dialog>
+          </div>
+
+
+<!-- update -->
+<div class="card flex justify-content-center">
+    <p-dialog header="Header" [(visible)] = "visible2" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+      <ng-template pTemplate="header">
+          <div class="inline-flex align-items-center justify-content-center gap-2">
+              <span class="font-bold white-space-nowrap">Actualizar URL</span>
+          </div>
+        </ng-template>
+           <div class="field">
+              <label for="nombreUrl">Nombre Sistema</label>
+              <input id="nombreUrl" [(ngModel)]="nombreUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field">
+              <label for="direccionUrl">Dirección</label>
+              <input id="direccionUrl"  [(ngModel)]="direccionUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field">
+            <label for="ambiente">Ambiente</label>
+            <p-dropdown appendTo="body" [options]="ambiente" [(ngModel)] = "selectedAmbiente" optionLabel="descripcion" [showClear]="true"  [placeholder]="selectedAmbiente?.descripcion"></p-dropdown>
+            <!-- [showClear]="true" -->
+            <!-- optionLabel="descripcion" -->
+            <!-- <p-dropdown [options]="opciones" [(ngModel)]="opcionSeleccionada" [compareWith]="compararOpciones"></p-dropdown> -->
+
+        </div>
+
+      <ng-template pTemplate="footer">
+          <p-button icon="pi pi-check" (click)="updateLink()" label="Ok" pAutoFocus [autofocus]="true"></p-button>
+      </ng-template>
+  </p-dialog>
+  </div>
+</p-panel>
+</div>
+
