@@ -1,164 +1,259 @@
 <p-menubar [model]="items">
   <ng-template pTemplate="start">
-      <img src="./../assets/linkHome.png" height="40" class="mr-2" />
+    <img src="./../assets/linkHome.png" height="40" class="mr-2" />
   </ng-template>
-  <!-- <ng-template pTemplate="end">
-      <input type="text" pInputText placeholder="Search" class="w-full" />
-  </ng-template> -->
 </p-menubar>
 
-
 <div class="card flex justify-content-center">
-    <!-- <input type="text" pInputText [(ngModel)]="value" /> -->
-    <p-panel header="link" [style]="{'width':'80rem'}">
+  
+  <p-panel [style]="{ width: '80rem' }"  [showHeader]="false">
+    
+    <div class="card flex justify-content-center gap-2">
+        <p-toast></p-toast>
+        <p-confirmDialog></p-confirmDialog>
+    </div>
 
-<div class="card flex justify-content-center gap-2">
-    <p-toast></p-toast>
-    <p-confirmDialog></p-confirmDialog>
-    <!-- <p-button (click)="confirm1($event)" icon="pi pi-check" label="Confirm"></p-button> -->
-    <!-- <p-button (click)="confirm2($event)" icon="pi pi-times" label="Delete" styleClass="p-button-danger"></p-button> -->
-</div>
-
-
-
-  <!-- [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']" -->
-  <!--p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" -->
-  <p-table #dt [value]="links" [(selection)]="selectedLinks" dataKey="id"  [rowHover]="true"
-            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" 
-            [globalFilterFields]="['nombre','urlx']" 
-            >
-            <ng-template pTemplate="caption">
-                <div class="table-header">
-                    Buscar
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Filter" />
-                    </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 3rem"></th>
-                    <th pSortableColumn="nombre">Sistema <p-sortIcon field="nombre"></p-sortIcon></th>
-                    <th pSortableColumn="url">Direccion <p-sortIcon field="url"></p-sortIcon></th>
-                    <th pSortableColumn="ambiente">Ambiente <p-sortIcon field="ambiente"></p-sortIcon></th>
-                    <th style="width: 8rem"></th>
-                    <th style="width: 8rem"></th>
-                </tr>
-         
-            </ng-template>
-            <ng-template pTemplate="body" let-link>
-                <tr class="p-selectable-row">
-                    <td>
-                        <!-- <p-tableCheckbox [value]="customer"></p-tableCheckbox> -->
-                    </td>
-                    <td>
-                        <span class="p-column-title">Nombre</span>
-                        {{link.nombre}}
-                    </td>
-                   
-                    <td>
-                        <span class="p-column-title">Ambiente</span>
-                        <span class="image-text">{{link.ambiente.descripcion}}</span>
-                    </td>
-
-                    <td>
-                        <span class="p-column-title">Direccion</span>
-                        <span class="image-text">{{link.url}}</span>
-                    </td>
-                    
-                  
-                    <td style="text-align: center">
-                        <button pButton type="button" class="p-button-primary" icon="pi pi-cog" (click)="showUpdateLink(link)">Actualizar</button>
-                    </td>
-                    
-                    <td style="text-align: center">
-
-                        <!-- <div class="card flex justify-content-center gap-2"> -->
-                            <!-- <p-toast></p-toast> -->
-                            <!-- <p-confirmDialog></p-confirmDialog> -->
-                            <!-- <p-button (click)="confirm1($event)" icon="pi pi-check" label="Confirm"></p-button> -->
-                            <!-- <p-button (click)="confirm2($event)" icon="pi pi-times" label="Delete" styleClass="p-button-danger"></p-button> -->
-                            <!-- <button pButton type="button" class="p-button-primary" icon="pi pi-search" (click) ="deleteLink($event,link)"></button> -->
-                                <button pButton type="button" class="p-button-primary" icon="pi pi-cog" (click) ="deleteLink($event,link)">Borrar</button>
-                                <!-- <p-button  icon="pi pi-times" styleClass="p-button-danger" (click) ="deleteLink($event,link)">Borrar</p-button> -->
-                        <!-- </div> -->
-                   </td>
-                   
-
-
-                 
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="8">No existe resultados.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-       
-
-
-<!-- new -->
-        <div class="card flex justify-content-center">
-            <p-dialog header="Header" [(visible)] = "visible" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-              <ng-template pTemplate="header">
-                  <div class="inline-flex align-items-center justify-content-center gap-2">
-                      <span class="font-bold white-space-nowrap">Nuevo URL</span>
-                  </div>
-                </ng-template>
-                   <div class="field">
-                      <label for="nombreUrl">Nombre Sistema</label>
-                      <input id="nombreUrl" [(ngModel)]="nombreUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                  </div>
-                  <div class="field">
-                      <label for="direccionUrl">Dirección</label>
-                      <input id="direccionUrl"  [(ngModel)]="direccionUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                  </div>
-                  <div class="field">
-                    <label for="ambiente">Ambiente</label>
-                    <p-dropdown appendTo="body" [options]="ambiente" [(ngModel)] = "selectedAmbiente" optionLabel="descripcion" [showClear]="true" placeholder="Seleccionar ambiente"></p-dropdown>
-                </div>
-        
-              <ng-template pTemplate="footer">
-                  <p-button icon="pi pi-check" (click)="createLink()" label="Ok" pAutoFocus [autofocus]="true"></p-button>
-              </ng-template>
-          </p-dialog>
-          </div>
-
-
-<!-- update -->
-<div class="card flex justify-content-center">
-    <p-dialog header="Header" [(visible)] = "visible2" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <!-- [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']" -->
+    <!--p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" -->
+    <p-table
+      #dt
+      [value]="links"
+      [(selection)]="selectedLinks"
+      dataKey="id"
+      [rowHover]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading"
+      [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [filterDelay]="0"
+      [globalFilterFields]="['nombre', 'urlx']"
+    >
+      <ng-template pTemplate="caption">
+        <div class="table-header">
+          Buscar
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilterGlobal($event, 'contains')"
+              placeholder="Filter"
+            />
+          </span>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
-          <div class="inline-flex align-items-center justify-content-center gap-2">
-              <span class="font-bold white-space-nowrap">Actualizar URL</span>
+        <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="nombre">
+            Sistema <p-sortIcon field="nombre"></p-sortIcon>
+          </th>
+          <th pSortableColumn="url">
+            Direccion <p-sortIcon field="url"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ambiente">
+            Ambiente <p-sortIcon field="ambiente"></p-sortIcon>
+          </th>
+          <th style="width: 8rem"></th>
+          <th style="width: 8rem"></th>
+          <th style="width: 8rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-link>
+        <tr class="p-selectable-row">
+          <td>
+          </td>
+          <td>
+            <span class="p-column-title">Nombre</span>
+            {{ link.nombre }}
+          </td>
+          <td>
+            <span class="p-column-title">Direccion</span>
+            <span class="image-text">{{ link.url }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">Ambiente</span>
+            <span class="image-text">{{ link.ambiente.descripcion }}</span>
+          </td>
+          
+          <td style="width: 5%">
+            <!-- <button
+              pButton
+              type="button"
+              class="p-button-primary"
+              icon="pi pi-cog"
+            >
+            <span class="pi pi-external-link" style="font-size: 1.5rem;">
+            </span>
+            
+            </button> -->
+            <a href="{{link.url}}" target="_blank" class="p-button" *ngIf="link.url.substr(0,4)=='http'; else noUrl;" style="text-decoration: none;">
+              <span class="pi pi-external-link" style="font-size: 1.5rem;"></span>
+            </a>
+          </td>
+
+          <td style="width: 5%">
+            <button
+              pButton
+              type="button"
+              class="p-button-primary"
+              icon="pi pi-cog"
+              (click)="showUpdateLink(link)"
+            >
+            <span class="pi pi-file-edit" style="font-size: 1.5rem;"></span>
+            </button>
+          </td>
+
+          <!-- <td style="text-align: center"> -->
+          <td style="width: 5%">
+            <button
+              pButton
+              type="button"
+              class="p-button-primary"
+              icon="pi pi-cog"
+              (click)="deleteLink($event, link)"
+            >
+            <span class="pi pi-trash" style="font-size: 1.5rem;"></span> 
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No existe resultados.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+    <ng-template  #noUrl>
+    <button disabled="true"> 
+      <span class="pi pi-external-link" style="font-size: 1.5rem;"></span>
+    </button>
+    </ng-template>
+
+
+    <!-- new -->
+    <!-- [style]="{ width: '80rem' }" -->
+    <div class="card flex justify-content-center">
+        <p-dialog
+            header="Header"
+            [(visible)]="visible"
+            [modal]="true"
+            [style]="{ width: '50rem' }"
+            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        >
+            <ng-template pTemplate="header">
+            <div
+                class="inline-flex align-items-center justify-content-center gap-2"
+            >
+                <span class="font-bold white-space-nowrap">Nuevo URL</span>
+            </div>
+            </ng-template>
+            
+                <div class="field">
+                <label for="nombreUrl">Nombre Sistema</label>
+                <input
+                    id="nombreUrl"
+                    [(ngModel)]="nombreUrl"
+                    type="text"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                />
+                </div>
+                <div class="field">
+                <label for="direccionUrl">Dirección</label>
+                <input
+                    id="direccionUrl"
+                    [(ngModel)]="direccionUrl"
+                    type="text"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                />
+                </div>
+                <div class="field">
+                <label for="ambiente" style="padding-right: 1rem" >Ambiente</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="ambiente"
+                    [(ngModel)]="selectedAmbiente"
+                    optionLabel="descripcion"
+                    [showClear]="true"
+                    placeholder="Seleccionar ambiente"
+                    [style]= "{width: '20rem'}"
+                ></p-dropdown>
+                </div>
+            
+            <ng-template pTemplate="footer">
+            <p-button
+                icon="pi pi-check"
+                (click)="createLink()"
+                label="Guardar"
+                pAutoFocus
+                [autofocus]="true"
+            ></p-button>
+            </ng-template>
+        </p-dialog>
+        </div>
+    
+    <!-- update -->
+    <div class="card flex justify-content-center">
+      <p-dialog
+        header="Header"
+        [(visible)]="visible2"
+        [modal]="true"
+        [style]="{ width: '50rem' }"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+      >
+        <ng-template pTemplate="header">
+          <div
+            class="inline-flex align-items-center justify-content-center gap-2"
+          >
+            <span class="font-bold white-space-nowrap">Actualizar URL</span>
           </div>
         </ng-template>
-           <div class="field">
-              <label for="nombreUrl">Nombre Sistema</label>
-              <input id="nombreUrl" [(ngModel)]="nombreUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="field">
-              <label for="direccionUrl">Dirección</label>
-              <input id="direccionUrl"  [(ngModel)]="direccionUrl" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="field">
-            <label for="ambiente">Ambiente</label>
-            <p-dropdown appendTo="body" [options]="ambiente" [(ngModel)] = "selectedAmbiente" optionLabel="descripcion" [showClear]="true"  [placeholder]="selectedAmbiente?.descripcion"></p-dropdown>
-            <!-- [showClear]="true" -->
-            <!-- optionLabel="descripcion" -->
-            <!-- <p-dropdown [options]="opciones" [(ngModel)]="opcionSeleccionada" [compareWith]="compararOpciones"></p-dropdown> -->
-
+        <div class="field">
+          <label for="nombreUrl">Nombre Sistema</label>
+          <input
+            id="nombreUrl"
+            [(ngModel)]="nombreUrl"
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          />
+        </div>
+        <div class="field">
+          <label for="direccionUrl">Dirección</label>
+          <input
+            id="direccionUrl"
+            [(ngModel)]="direccionUrl"
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          />
+        </div>
+        <div class="field">
+          <label for="ambiente" style="padding-right: 1rem">Ambiente</label>
+          <p-dropdown
+            appendTo="body"
+            [options]="ambiente"
+            [(ngModel)]="selectedAmbiente"
+            optionLabel="descripcion"
+            [showClear]="true"
+            [placeholder]="selectedAmbiente?.descripcion"
+            [style]= "{width: '20rem'}"
+          ></p-dropdown>
+          
         </div>
 
-      <ng-template pTemplate="footer">
-          <p-button icon="pi pi-check" (click)="updateLink()" label="Ok" pAutoFocus [autofocus]="true"></p-button>
-      </ng-template>
-  </p-dialog>
-  </div>
-</p-panel>
+        <ng-template pTemplate="footer">
+          <p-button
+            icon="pi pi-check"
+            (click)="updateLink()"
+            label="Actualizar"
+            pAutoFocus
+            [autofocus]="true"
+          ></p-button>
+        </ng-template>
+      </p-dialog>
+    </div>
+  </p-panel>
 </div>
-
